@@ -103,7 +103,7 @@ class MainActivity : ComponentActivity() {
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
-                return
+                Toast.makeText(this,"No tienes permisos para bluetooth",Toast.LENGTH_LONG).show()
             }
 
 
@@ -119,23 +119,6 @@ class MainActivity : ComponentActivity() {
             mainActivityViewModel=viewModel()
 
             var connected=mainActivityViewModel.connected.collectAsState()
-            LaunchedEffect(key1 = times) {
-                delay(1000L)
-                mainActivityViewModel.conectar()
-                if (connected.value == true) {
-                    status = "Conectado"
-                } else {
-                    status = "Desconectado"
-
-                }
-                times++
-            }
-
-
-
-
-
-
 
             Principal(estado = status,connected=connected.value,onDir={
                 when(it){
@@ -152,9 +135,17 @@ class MainActivity : ComponentActivity() {
             }, onAngule = {
                 mainActivityViewModel.gira(it.toInt())
             })
+            LaunchedEffect(key1 = times) {
+                delay(1000L)
+                mainActivityViewModel.conectar()
+                if (connected.value == true) {
+                    status = "Conectado"
+                } else {
+                    status = "Desconectado"
 
-
-
+                }
+                times++
+            }
 
         }
 
